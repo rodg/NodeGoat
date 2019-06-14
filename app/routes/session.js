@@ -1,5 +1,6 @@
 var UserDAO = require("../data/user-dao").UserDAO;
 var AllocationsDAO = require("../data/allocations-dao").AllocationsDAO;
+var ESAPI = require('node-esapi');
 
 /* The SessionHandler must be constructed with a connected db */
 function SessionHandler(db) {
@@ -61,7 +62,7 @@ function SessionHandler(db) {
             var invalidPasswordErrorMessage = "Invalid password";
             if (err) {
                 if (err.noSuchUser) {
-                    console.log('Error: attempt to login with invalid user: ', userName);
+                    console.log('Error: attempt to login with invalid user: ', ESAPI.encoder().encodeForHTML(userName));
 
                     // Fix for A1 - 3 Log Injection - encode/sanitize input for CRLF Injection
                     // that could result in log forging:

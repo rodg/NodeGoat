@@ -15,21 +15,25 @@ function UserDAO(db) {
     var usersCol = db.collection("users");
 
     this.addUser = function(userName, firstName, lastName, password, email, callback) {
+        var salt = bcrypt.genSaltSync();
+        var passwordHash = bcrypt.hashSync(password,salt);
 
+            
         // Create user document
         var user = {
             userName: userName,
             firstName: firstName,
             lastName: lastName,
             benefitStartDate: this.getRandomFutureDate(),
-            password: password //received from request param
+            //password: passwordHash //received from request param
+            password: passwordHash
             /*
             // Fix for A2-1 - Broken Auth
             // Stores password  in a safer way using one way encryption and salt hashing
             password: bcrypt.hashSync(password, bcrypt.genSaltSync())
             */
         };
-
+        console.log(user)
         // Add email if set
         if (email !== "") {
             user.email = email;
@@ -66,7 +70,8 @@ function UserDAO(db) {
 
         // Helper function to compare passwords
         function comparePassword(fromDB, fromUser) {
-            return fromDB === fromUser;
+            //return bcrypt.compareSync(fromDB, fromUser);
+          return fromDB === fromUser;
             /*
             // Fix for A2-Broken Auth
             // compares decrypted password stored in this.addUser()

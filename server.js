@@ -41,21 +41,21 @@ MongoClient.connect(config.db, function(err, db) {
     // Fix for A5 - Security MisConfig
     // TODO: Review the rest of helmet options, like "xssFilter"
     // Remove default x-powered-by response header
-    app.disable("x-powered-by");
+    //app.disable("x-powered-by");
 
     // Prevent opening page in frame or iframe to protect from clickjacking
     //console.log(helmet)
     //app.use(helmet.xframe());
-    app.use(helmet.frameguard)
+    //app.use(helmet.frameguard)
 
     // Prevents browser from caching and storing page
-    app.use(helmet.noCache());
+    //app.use(helmet.noCache());
 
     // Allow loading resources only from white-listed domains
-    app.use(helmet.csp());
+    //app.use(helmet.csp());
 
     // Allow communication only on HTTPS
-    app.use(helmet.hsts());
+    //app.use(helmet.hsts());
 
     // TODO: Add another vuln: https://github.com/helmetjs/helmet/issues/26
     // Enable XSS filter in IE (On by default)
@@ -65,7 +65,7 @@ MongoClient.connect(config.db, function(err, db) {
     // app.use(helmet.xssFilter({ setOnOldIE: true }));
 
     // Forces browser to only use the Content-Type set in the response header instead of sniffing or guessing it
-    app.use(nosniff());
+   // app.use(helmet.noSniff());
     
 
     // Adding/ remove HTTP Headers for security
